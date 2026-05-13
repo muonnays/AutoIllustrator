@@ -32,6 +32,9 @@ async function generateScript(prompt, model, s) {
             { role: "user", content: prompt }
         ],
         stream: true,
+        venice_parameters: {
+            include_venice_system_prompt: false
+        }
     });
 
     s.stop('ExtendScript generation started.');

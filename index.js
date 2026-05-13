@@ -65,7 +65,7 @@ async function main() {
     const model = await select({
         message: 'Select the Venice API model to use:',
         options: [
-            { value: 'glm-4-9b', label: 'glm 5.1 (Fallback to glm-4/glm-4-9b)' }, // User mentioned glm 5.1, but venice API standard names might vary.
+            { value: 'zai-org-glm-5-1', label: 'GLM 5.1 (zai-org-glm-5-1)' },
             { value: 'llama-3.3-70b', label: 'Llama 3.3 70B' },
             { value: 'qwen32b', label: 'Qwen 32B' }
         ],

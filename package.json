@@ -1,0 +1,26 @@
+{
+  "name": "autoillustrator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muonnays/AutoIllustrator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/muonnays/AutoIllustrator/issues"
+  },
+  "homepage": "https://github.com/muonnays/AutoIllustrator#readme",
+  "dependencies": {
+    "@clack/prompts": "^1.4.0",
+    "dotenv": "^17.4.2",
+    "openai": "^6.37.0"
+  }
+}

@@ -24,16 +24,29 @@ const openai = new OpenAI({
     baseURL: 'https://api.venice.ai/api/v1',
 });
 
-async function generateScript(prompt, model) {
-    const response = await openai.chat.completions.create({
+async function generateScript(prompt, model, s) {
+    const stream = await openai.chat.completions.create({
         model: model,
         messages: [
             { role: "system", content: systemPrompt },
             { role: "user", content: prompt }
         ],
+        stream: true,
     });
 
-    let script = response.choices[0].message.content.trim();
+    s.stop('ExtendScript generation started.');
+    console.log('\n--- Generating Script ---');
+
+    let script = '';
+    for await (const chunk of stream) {
+        const content = chunk.choices[0]?.delta?.content || '';
+        process.stdout.write(content);
+        script += content;
+    }
+    
+    console.log('\n------------------------\n');
+
+    script = script.trim();
     // Strip markdown formatting if the LLM includes it despite instructions
     script = script.replace(/^```(?:javascript|js|jsx)?\s*/i, '').replace(/```\s*$/i, '').trim();
     return script;
@@ -86,12 +99,7 @@ async function main() {
         s.start('Generating ExtendScript...');
 
         try {
-            const scriptContent = await generateScript(userPrompt, model);
-            s.stop('ExtendScript generated.');
-            
-            console.log('\n--- Generated Script ---');
-            console.log(scriptContent);
-            console.log('------------------------\n');
+            const scriptContent = await generateScript(userPrompt, model, s);
 
             const shouldRun = await confirm({
                 message: 'Execute this script in Illustrator?',
